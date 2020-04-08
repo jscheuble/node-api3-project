@@ -1,5 +1,6 @@
 const express = require("express");
 const db = require("./userDb");
+const postDb = require("../posts/postDb");
 
 const router = express.Router();
 
@@ -13,8 +14,15 @@ router.post("/", validateUser, (req, res) => {
     });
 });
 
-router.post("/:id/posts", (req, res) => {
-  // do your magic!
+router.post("/:id/posts", validateUserId, validatePost, (req, res) => {
+  postDb
+    .insert(req.body)
+    .then((post) => {
+      res.status(201).json(post);
+    })
+    .catch(() => {
+      res.status(500).json({ message: "Unable to upload" });
+    });
 });
 
 router.get("/", (req, res) => {
