@@ -13,8 +13,8 @@ server.get("/", (req, res) => {
 });
 
 server.use("/api/users", logger, userRouter);
-//custom middleware
 
+//custom middleware
 function logger(req, res, next) {
   console.log(`${req.method} request to ${req.originalUrl}`);
   next();
