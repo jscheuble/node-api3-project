@@ -58,7 +58,13 @@ router.delete("/:id", validateUserId, (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
-  // do your magic!
+  db.update(req.params.id, req.body)
+    .then(() => {
+      res.status(200).json(req.body);
+    })
+    .catch(() => {
+      res.status(500).json({ message: "unable to update user info" });
+    });
 });
 
 //custom middleware
