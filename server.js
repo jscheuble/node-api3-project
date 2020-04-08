@@ -6,6 +6,7 @@ const userRouter = require("./users/userRouter.js");
 const server = express();
 
 server.use(helmet());
+server.use(logger);
 server.use(express.json());
 
 server.get("/", (req, res) => {
@@ -16,7 +17,9 @@ server.use("/api/users", logger, userRouter);
 
 //custom middleware
 function logger(req, res, next) {
-  console.log(`${req.method} request to ${req.originalUrl}`);
+  console.log(
+    `[${new Date().toISOString()}] ${req.method} request to ${req.originalUrl}`
+  );
   next();
 }
 
